@@ -107,3 +107,6 @@ log_file.txt
 
 # shelve files
 results*
+
+# JetBrains folder
+.idea
