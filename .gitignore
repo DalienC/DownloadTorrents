@@ -114,3 +114,4 @@ results*
 
 # Jenkins workspace
 JenkinsWorkspace/
+JenkinsWorkspace@tmp/
