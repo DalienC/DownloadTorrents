@@ -10,6 +10,9 @@ import logging, os, base64, requests, bs4, re, json, shelve, sys, datetime, getp
 open('debug_log.txt','w').close()
 logging.basicConfig(level=logging.DEBUG, filename='debug_log.txt', format='%(asctime)s - %(levelname)s - %(message)s')
 #logging.disable(logging.DEBUG)
+bla = {'x':1]
+
+
 
 # DONE: have a file that has what torrent to look for. Open the file and create list. return list of items
 def getNamesFromFile(fileName):
