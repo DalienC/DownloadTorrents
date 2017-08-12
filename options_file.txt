@@ -57,8 +57,7 @@ disable=blacklisted-name,invalid-name,missing-docstring,empty-docstring,unneeded
 # multiple time (only on the command line, not in the configuration file where
 # it should appear only once). See also the "--disable" option for examples.
 #enable=bare-except,syntax-error
-#enable=E
-enable=invalid-name
+enable=E
 
 
 [REPORTS]
