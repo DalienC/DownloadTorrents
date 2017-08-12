@@ -104,7 +104,7 @@ ENV/
 error_log.txt
 html_out.txt
 log_file.txt
-#debug_log.txt
+debug_log.txt
 
 # shelve files
 results*
