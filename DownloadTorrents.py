@@ -5,7 +5,7 @@
 """
 
 from multiprocessing import Queue
-import logging, os, base64, requests, bs4, re, json, shelve, sys, datetime, getpass
+import logging, os, requests, bs4, re, json, shelve, sys, datetime, getpass
 
 open('..\\debug_log.txt','w').close()
 logging.basicConfig(level=logging.DEBUG, filename='..\\debug_log.txt', format='%(asctime)s - %(levelname)s - %(message)s')
@@ -415,3 +415,4 @@ else:
             print('\n-----------------------------------------------------------------------------------------\n')
 logFile.close()
 print('All tasks completed successfully :)')
+os.system('pause')
