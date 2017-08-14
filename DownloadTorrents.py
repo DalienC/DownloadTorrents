@@ -94,6 +94,10 @@ def parseHtml(htmlString, item):
             finalResults.append(item.find_parents('tr')[0])
         resDic = {}
         for i in range(len(finalResults)):
+            try:
+                downloadLink = str(findNextSibling(findNextSibling(finalResults[i].td, 1).a, 1)['href'])
+            except:
+                downloadLink = str(findNextSibling(findNextSibling(finalResults[i].td, 1).a, 2)['href'])
             newElement = {str(findNextSibling(findNextSibling(finalResults[i].td, 1).a, 1)['href']): {
                 'type': str(finalResults[i].td.a.img['title']),
                 'name': str(findNextSibling(finalResults[i].td, 1).a.b.string),
@@ -101,8 +105,7 @@ def parseHtml(htmlString, item):
                 'size': str(list(findNextSibling(finalResults[i].td, 5))[0] + ' ' +
                             list(findNextSibling(finalResults[i].td, 5))[2]),
                 'timesDownloaded': str(findNextSibling(finalResults[i].td, 6).string),
-                'linkToDownload': 'https://www.linkomanija.net/' +
-                                  str(findNextSibling(findNextSibling(finalResults[i].td, 1).a, 1)['href'])
+                'linkToDownload': 'https://www.linkomanija.net/' + downloadLink
             }}
             resDic.update(newElement)
         logFile.write(
