@@ -7,8 +7,8 @@
 from multiprocessing import Queue
 import logging, os, base64, requests, bs4, re, json, shelve, sys, datetime, getpass
 
-open('debug_log.txt','w').close()
-logging.basicConfig(level=logging.DEBUG, filename='debug_log.txt', format='%(asctime)s - %(levelname)s - %(message)s')
+open('.\\debug_log.txt','w').close()
+logging.basicConfig(level=logging.DEBUG, filename='.\\debug_log.txt', format='%(asctime)s - %(levelname)s - %(message)s')
 #logging.disable(logging.DEBUG)
 
 
@@ -70,7 +70,7 @@ def searchForItems(session, item):
         logFile.write(datetime.datetime.now().strftime(
             '%Y/%m/%d %H:%M:%S') + ' - ERROR - failure while searching for \"%s\". HTML code file generated as html_out.txt. Error message: %s\n' % (
                       item, err))
-        out = open('html_out.txt','w', encoding="utf-8")
+        out = open('.\\html_out.txt','w', encoding="utf-8")
         out.write(finalHtmlPage)
         out.close()
         sys.exit(err)
@@ -112,7 +112,7 @@ def parseHtml(htmlString, item):
         logFile.write(datetime.datetime.now().strftime(
             '%Y/%m/%d %H:%M:%S') + ' - ERROR - failure while parsing HTML code. HTML code and additional info dumped to file \"html_out.txt\". Error message: %s\n' % (
                       err))
-        out = open('html_out.txt', 'a', encoding="utf-8")
+        out = open('.\\html_out.txt', 'a', encoding="utf-8")
         out.write(htmlString)
         out.write('\n----------------------------elements in findResults (<a> tags)--------------------------------')
         for elem in findResults:
@@ -135,7 +135,7 @@ def parseHtml(htmlString, item):
 
 # DONE: store All results in shelve file on disk
 def saveToFileAll(localDic, item):
-    shelveFile = shelve.open('results')
+    shelveFile = shelve.open('.\\results')
     shelveFile[item] = localDic
     print('Updated local store with all found elements for \"%s\". Total in store: %s' % (item, len(shelveFile[item])))
     shelveFile.close()
@@ -145,7 +145,7 @@ def saveToFileAll(localDic, item):
 # DONE: add new iteams in shelve file on disk
 def saveToFileNew(newElement, item):
     try:
-        shelveFile = shelve.open('results')
+        shelveFile = shelve.open('.\\results')
         tempDic = shelveFile[item]
         tempDic.update(newElement)
         shelveFile[item] = tempDic
@@ -164,7 +164,7 @@ def saveToFileNew(newElement, item):
 # DONE: delete All from results file. ad-hoc use
 def deleteFromFileAll():
     try:
-        shelveFile = shelve.open('results')
+        shelveFile = shelve.open('.\\results')
         for item in shelveFile:
             del shelveFile[item]
         print('Local store fully cleaned.')
@@ -181,7 +181,7 @@ def deleteFromFileAll():
 # DONE: delete single item from results file. ad-hoc use
 def deleteFromFileSingle():
     try:
-        shelveFile = shelve.open('results')
+        shelveFile = shelve.open('.\\results')
         indexList = shelveFile['itemIndex']
         print('which one to delete? \n %s' % indexList)
         item = input()
@@ -208,7 +208,7 @@ def deleteFromFileSingle():
 # DONE: check if key exists in shelve file. if new add all to store and inform user
 def checkIfNewSearchItem(item):
     try:
-        shelveFile = shelve.open('results')
+        shelveFile = shelve.open('.\\results')
         if 'itemIndex' not in list(shelveFile.keys()):
             print('Local store index updated with new entry for \"%s\".' % item)
             indexList = [item]
@@ -259,7 +259,7 @@ def printToScreenNew(localDic, localkey):
 # DONE: compare results with local database to identify new entries only
 def getNewOnly(localDic, key):
     try:
-        shelveFile = shelve.open('results')
+        shelveFile = shelve.open('.\\results')
         returnNewItemList = []
         if shelveFile[key] == localDic:
             shelveFile.close()
@@ -318,8 +318,7 @@ def downloadTorrents(session, torrent):
         content = session.get(torrent['linkToDownload'])
         content.raise_for_status()
         re.sub(r'[\\/*?:"<>|]', '', torrent['name'])
-        filename = 'C:\\Users\\daliu\\Downloads\\auto_downloaded_torrents\\' + re.sub(r'[\\/*?:"<>|]', '',
-                                                                                      torrent['name']) + '.torrent'
+        filename = '.\\auto_downloaded_torrents\\' + re.sub(r'[\\/*?:"<>|]', '', torrent['name']) + '.torrent'
         file = open(filename, 'wb')
         for chunk in content.iter_content(10000):
             file.write(chunk)
@@ -330,7 +329,7 @@ def downloadTorrents(session, torrent):
     except Exception as err:
         logFile.write(datetime.datetime.now().strftime(
             '%Y/%m/%d %H:%M:%S') + ' - ERROR - failure while downloading \"%s\".Additional info written to file error_log.txt. Error message: %s\n' % (torrent, err))
-        out = open('error_log.txt','w')
+        out = open('.\\error_log.txt','w')
         out.write('-----------------------------Element info:-------------------------------\n\n')
         out.write(json.dumps(torrent, indent=2))
         out.write('\n\n-----------------------------Filename info:-------------------------------\n\n')
@@ -352,17 +351,17 @@ def downloadTorrents(session, torrent):
 # DONE: print local store content
 def checkShelveFileContent():
     print('------------------------PRINTING SHELVE FILE CONTENT:------------------------')
-    shelveFile = shelve.open('results')
+    shelveFile = shelve.open('.\\results')
     for item in list(shelveFile.keys()):
         print(json.dumps(shelveFile[item], indent=2), '\n')
 
 
 """ MAIN PROGRAM STARTS HERE"""
 global logFile
-open('log_file.txt','w').close()
-open('html_out.txt', 'w').close()
-open('error_log.txt', 'w').close()
-logFile = open('log_file.txt','a')
+open('.\\log_file.txt','w').close()
+open('.\\html_out.txt', 'w').close()
+open('.\\error_log.txt', 'w').close()
+logFile = open('.\\log_file.txt','a')
 if len(sys.argv) > 1:
     if sys.argv[1].lower() == 'delete_all':
         deleteFromFileAll()
@@ -375,7 +374,7 @@ if len(sys.argv) > 1:
 \n delete - delete single item \n print_local_store - print all contents of local store' %sys.argv[1])
 else:
     url = 'https://www.linkomanija.net/takelogin.php'
-    searchList = getNamesFromFile('search_list.txt')
+    searchList = getNamesFromFile('.\\search_list.txt')
     with requests.Session() as userSession:
         userSession = login(url, userSession)
         # running code against every item in the search list
