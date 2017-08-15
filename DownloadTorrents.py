@@ -164,6 +164,7 @@ def saveToFileNew(newElement, item):
                       newElement[list(newElement.keys())[0]]['name'], err))
         sys.exit(err)
 
+
 # DONE: delete All from results file. ad-hoc use
 def deleteFromFileAll():
     try:
@@ -207,6 +208,7 @@ def deleteFromFileSingle():
             '%Y/%m/%d %H:%M:%S') + ' - ERROR - failure while deleting \"%s\" item from local store. Error message: %s\n' % (
                           item, err))
         sys.exit(err)
+
 
 # DONE: check if key exists in shelve file. if new add all to store and inform user
 def checkIfNewSearchItem(item):
@@ -294,6 +296,7 @@ def getNewOnly(localDic, key):
                           key, err))
         sys.exit(err)
 
+
 # DONE: read input line which torrents to download and check if input is valid. return valid item list
 def selectWhichToDownload(maxItemNumber):
     inputString = input('\nWhich torrent do you want to download? \
@@ -350,6 +353,7 @@ def downloadTorrents(session, torrent):
         logFile.write(datetime.datetime.now().strftime(
             '%Y/%m/%d %H:%M:%S') + ' - ERROR - failure while opening file \"%s\". Error message: %s\n' % (filename, err))
         sys.exit(err)
+
 
 # DONE: print local store content
 def checkShelveFileContent():
