@@ -418,5 +418,5 @@ else:
                     print('\nNew items not added to local store')
             print('\n-----------------------------------------------------------------------------------------\n')
 logFile.close()
-print('All tasks completed successfully! :):):)')
+print('All tasks completed successfully! :):D:)')
 os.system('pause')
