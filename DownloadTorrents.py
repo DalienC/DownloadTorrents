@@ -368,7 +368,7 @@ global logFile
 open('..\\log_file.txt','w').close()
 open('..\\html_out.txt', 'w').close()
 open('..\\error_log.txt', 'w').close()
-logFile = open('..\\log_file.txt','a')
+logFile = open('..\\log_file.txt','a',encoding='utf-8')
 if len(sys.argv) > 1:
     if sys.argv[1].lower() == 'delete_all':
         deleteFromFileAll()
