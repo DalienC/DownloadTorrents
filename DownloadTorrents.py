@@ -324,7 +324,7 @@ def downloadTorrents(session, torrent):
         content = session.get(torrent['linkToDownload'])
         content.raise_for_status()
         re.sub(r'[\\/*?:"<>|]', '', torrent['name'])
-        filename = '.\\auto_downloaded_torrents\\' + re.sub(r'[\\/*?:"<>|]', '', torrent['name']) + '.torrent'
+        filename = '..\\auto_downloaded_torrents\\' + re.sub(r'[\\/*?:"<>|]', '', torrent['name']) + '.torrent'
         file = open(filename, 'wb')
         for chunk in content.iter_content(10000):
             file.write(chunk)
