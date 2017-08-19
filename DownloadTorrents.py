@@ -70,7 +70,7 @@ def searchForItems(session, item):
         logFile.write(datetime.datetime.now().strftime(
             '%Y/%m/%d %H:%M:%S') + ' - ERROR - failure while searching for \"%s\". HTML code file generated as html_out.txt. Error message: %s\n' % (
                       item, err))
-        out = open('..\\html_out.txt','w', encoding="utf-8")
+        out = open('..\\html_out.txt','a', encoding="utf-8")
         out.write(finalHtmlPage)
         out.close()
         sys.exit(err)
@@ -98,7 +98,7 @@ def parseHtml(htmlString, item):
                 downloadLink = str(findNextSibling(findNextSibling(finalResults[i].td, 1).a, 1)['href'])
             except:
                 downloadLink = str(findNextSibling(findNextSibling(finalResults[i].td, 1).a, 2)['href'])
-            newElement = {str(findNextSibling(findNextSibling(finalResults[i].td, 1).a, 1)['href']): {
+            newElement = {downloadLink: {
                 'type': str(finalResults[i].td.a.img['title']),
                 'name': str(findNextSibling(finalResults[i].td, 1).a.b.string),
                 'added': str(list(findNextSibling(finalResults[i].td, 4).nobr)[0]),
@@ -123,13 +123,13 @@ def parseHtml(htmlString, item):
         out.write('\n\n-----------------------elements in findResults (parent <tr> tags)---------------------------')
         for elem in finalResults:
             out.write('\n\n'+str(elem))
-        out.write('\n\n-------------------------------------------------------------------------------------------\n\n')
-        out.write(str(finalResults[i])+'\n\n')
-        out.write(str(finalResults[i].td) + '\n\n')
-        out.write(str(findNextSibling(finalResults[i].td, 1)) + '\n\n')
-        out.write(str(findNextSibling(finalResults[i].td, 1).a) + '\n\n')
-        out.write(str(findNextSibling(findNextSibling(finalResults[i].td, 1).a, 1)) + '\n\n')
-        out.write(str(findNextSibling(findNextSibling(finalResults[i].td, 1).a, 1)['href']) + '\n\n')
+        out.write('\n\n----------------------------------------Tag by tag---------------------------------------------------\n\n')
+        out.write(str(finalResults[i])+'\n\n\n')
+        out.write(str(finalResults[i].td) + '\n\n\n')
+        out.write(str(findNextSibling(finalResults[i].td, 1)) + '\n\n\n')
+        out.write(str(findNextSibling(finalResults[i].td, 1).a) + '\n\n\n')
+        out.write(str(findNextSibling(findNextSibling(finalResults[i].td, 1).a, 1)) + '\n\n\n')
+        out.write(str(findNextSibling(findNextSibling(finalResults[i].td, 1).a, 1)['href']) + '\n\n\n')
         out.write('\n\n-------------------------------------------------------------------------------------------\n\n')
         out.write(json.dumps(resDic, indent=2))
         out.close()
