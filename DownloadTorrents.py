@@ -37,10 +37,14 @@ def login(httpAddress, session):
         'password': getpass.getpass('Enter password:')
     }
     try:
-        session.post(httpAddress, data=credentials).raise_for_status()
-        logFile.write(datetime.datetime.now().strftime(
-            '%Y/%m/%d %H:%M:%S') + ' - INFO - login to %s successful.\n' % (httpAddress))
-        return session
+        response = session.post(httpAddress, data=credentials)
+        if response.url == 'https://www.linkomanija.net/index.php':
+            logFile.write(datetime.datetime.now().strftime(
+                '%Y/%m/%d %H:%M:%S') + ' - INFO - login to %s successful.\n' % (httpAddress))
+            return session
+        else:
+            print('Password incorrect. Post returned url: %s' % response.url)
+            raise Exception
     except Exception as err:
         logFile.write(datetime.datetime.now().strftime(
             '%Y/%m/%d %H:%M:%S') + ' - ERROR - login to %s unsuccessful. Error message: %s\n' % (httpAddress,err))
